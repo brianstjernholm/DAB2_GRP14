@@ -24,27 +24,26 @@ namespace DAB2.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // STUDENT MODEL
-            modelBuilder.Entity<StudentModel>().HasKey(b => b.AuId);
+            modelBuilder.Entity<StudentModel>().HasKey(sm => sm.AuId);
             //-> One To Many - Exercise
             modelBuilder.Entity<StudentModel>()
-                .HasMany<ExerciseModel>(b => b.Exercises)
-                .WithOne(r => r.Students)
-                .HasForeignKey(a => a.Number + a.Lecture);   //-> a.number og a.lecture skal være KEYS, nuværende løsning er sikkert ikke korrekt.
+                .HasMany<ExerciseModel>(em => em.Exercises)
+                .WithOne(sm => sm.Students)
+                .HasForeignKey(em => new { em.Number, em.Lecture }); //-> a.number og a.lecture skal være KEYS, nuværende løsning er sikkert ikke korrekt.
 
             //-> Many To Many - Assignment
             modelBuilder.Entity<StudentAssignmentModel>().HasKey(sam => new { sam.AuId, sam.AssignmentId });
             modelBuilder.Entity<StudentAssignmentModel>()
                 .HasOne(sam => sam.Students)
                 .WithMany(sm => sm.StudentAssignments)
-                .HasForeignKey(plb => plb.AuId);
+                .HasForeignKey(sam => sam.AuId);
             modelBuilder.Entity<StudentAssignmentModel>()
-                .HasOne(plb => plb.Assignments)
-                .WithMany(b => b.StudentAssignments)
-                .HasForeignKey(plb => plb.AssignmentId);
+                .HasOne(sam => sam.Assignments)
+                .WithMany(am => am.StudentAssignments)
+                .HasForeignKey(sam => sam.AssignmentId);
 
-            //-> RIGTIG!
             //-> Many To Many - Course
-            modelBuilder.Entity<StudentCourseModel>().HasKey(a => new { a.AuId, a.CourseId });
+            modelBuilder.Entity<StudentCourseModel>().HasKey(scm => new { scm.AuId, scm.CourseId });
             modelBuilder.Entity<StudentCourseModel>()
                 .HasOne(scm => scm.Students)
                 .WithMany(sm => sm.StudentCourses)
@@ -53,101 +52,111 @@ namespace DAB2.Data
                 .HasOne(scm => scm.Courses)
                 .WithMany(cm => cm.StudentCourses)
                 .HasForeignKey(scm => scm.CourseId);
+
+
+
+
+            // EXERRCISE MODEL
+                modelBuilder.Entity<ExerciseModel>().HasKey(em => new { em.Number, em.Lecture });
+            //-> Many To One - Student
+            modelBuilder.Entity<ExerciseModel>()
+                .HasOne(em => em.Students)
+                .WithMany(sm => sm.Exercises)
+                .HasForeignKey(em => em.StudentAuId);
+
+            //-> Many To One - Teacher
+            modelBuilder.Entity<ExerciseModel>()
+                .HasOne(em => em.Teachers)
+                .WithMany(tm => tm.Exercises)
+                .HasForeignKey(em => em.TeacherAuId);
+
+            //-> Many To One - Course
+            modelBuilder.Entity<ExerciseModel>()
+                .HasOne(em => em.Courses)
+                .WithMany(cm => cm.Exercises)
+                .HasForeignKey(em => em.CourseId);
+
+
+
+
+
+            // TEACHER MODEL
+            modelBuilder.Entity<TeacherModel>().HasKey(tm => tm.AuId);
+            //-> Many To One - Course
+            modelBuilder.Entity<TeacherModel>()
+                .HasOne(tm => tm.Courses)
+                .WithMany(cm => cm.Teachers)
+                .HasForeignKey(tm => tm.CourseId);
+
+            //-> One To Many - Assignment
+            modelBuilder.Entity<TeacherModel>()
+                .HasMany<AssignmentModel>(am => am.Assignments)
+                .WithOne(tm => tm.Teachers)
+                .HasForeignKey(am => am.AssignmentId);
+
+            //-> One To Many - Exercise
+            modelBuilder.Entity<TeacherModel>()
+                .HasMany<ExerciseModel>(em => em.Exercises)
+                .WithOne(tm => tm.Teachers)
+                .HasForeignKey(em => new { em.Number, em.Lecture });
+
+
+
+
+
+            // ASSIGNMENT MODEL
+            modelBuilder.Entity<AssignmentModel>().HasKey(am => am.AssignmentId);
+            //-> Many To One - Course
+            modelBuilder.Entity<AssignmentModel>()
+                .HasOne(am => am.Courses)
+                .WithMany(cm => cm.Assignments)
+                .HasForeignKey(am => am.CourseId);
+
+            //-> Many To One - Teacher
+            modelBuilder.Entity<AssignmentModel>()
+                .HasOne(am => am.Teachers)
+                .WithMany(tm => tm.Assignments)
+                .HasForeignKey(am => am.TeacherAuId);
+
+            //-> Many To Many - Student
+            modelBuilder.Entity<StudentAssignmentModel>().HasKey(sam => new { sam.AuId, sam.AssignmentId });
+            modelBuilder.Entity<StudentAssignmentModel>()
+                .HasOne(sam => sam.Students)
+                .WithMany(sm => sm.StudentAssignments)
+                .HasForeignKey(sam => sam.AuId);
+            modelBuilder.Entity<StudentAssignmentModel>()
+                .HasOne(sam => sam.Assignments)
+                .WithMany(am => am.StudentAssignments)
+                .HasForeignKey(sam => sam.AssignmentId);
+
+
+
+
+            // COURSE MODEL
+            modelBuilder.Entity<CourseModel>().HasKey(cm => cm.CourseId);
+            //-> Many To Many - Student
+            modelBuilder.Entity<StudentCourseModel>().HasKey(scm => new { scm.AuId, scm.CourseId });
+            modelBuilder.Entity<StudentCourseModel>()
+                .HasOne(scm => scm.Students)
+                .WithMany(sm => sm.StudentCourses)
+                .HasForeignKey(scm => scm.AuId);
+            modelBuilder.Entity<StudentCourseModel>()
+                .HasOne(scm => scm.Courses)
+                .WithMany(cm => cm.StudentCourses)
+                .HasForeignKey(scm => scm.CourseId);
+
+            //-> One To Many - Assignment
+            modelBuilder.Entity<CourseModel>()
+                .HasMany<AssignmentModel>(am => am.Assignments)
+                .WithOne(cm => cm.Courses)
+                .HasForeignKey(am => am.AssignmentId);
+
+            //-> One To Many - Teacher
+            modelBuilder.Entity<CourseModel>()
+                .HasMany<TeacherModel>(tm => tm.Teachers)
+                .WithOne(cm => cm.Courses)
+                .HasForeignKey(am => am.AuId);
         }
-
-
-
-
-
-
-
-    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //{
-    //    // RESTAURANT MODEL
-    //    modelBuilder.Entity<RestaurantModel>().HasKey(b => b.Address);
-    //    //-> One To Many - Review
-    //    modelBuilder.Entity<RestaurantModel>()
-    //        .HasMany<ReviewModel>(b => b.Reviews)
-    //        .WithOne(r => r.Restaurants)
-    //        .HasForeignKey(r => r.RestaurantAddress);
-    //    //-> One To Many - Table
-    //    modelBuilder.Entity<RestaurantModel>()
-    //        .HasMany<TableModel>(b => b.Tables)
-    //        .WithOne(r => r.Restaurants)
-    //        .HasForeignKey(r => r.RestaurantAddress);
-    //    //-> Many To Many - Dish (RestaurantDish)
-    //    modelBuilder.Entity<RestaurantDishModel>().HasKey(p => new { p.RestaurantAddress, p.DishName });
-    //    modelBuilder.Entity<RestaurantDishModel>()
-    //        .HasOne(plb => plb.Restaurants)
-    //        .WithMany(b => b.RestaurantDishes)
-    //        .HasForeignKey(plb => plb.RestaurantAddress);
-    //    modelBuilder.Entity<RestaurantDishModel>()
-    //        .HasOne(plb => plb.Dishes)
-    //        .WithMany(b => b.RestaurantDishes)
-    //        .HasForeignKey(plb => plb.DishName);
-
-    //    // PERSON MODEL
-    //    modelBuilder.Entity<PersonModel>().HasKey(p => p.PersonId);
-    //    //-> One To One - Waiter
-    //    modelBuilder.Entity<PersonModel>()
-    //        .HasOne(p => p.Waiter)
-    //        .WithOne(w => w.Person)
-    //        .HasForeignKey<WaiterModel>();
-    //    //-> One To One - Guest
-    //    modelBuilder.Entity<PersonModel>()
-    //        .HasOne(p => p.Guest)
-    //        .WithOne(g => g.Person)
-    //        .HasForeignKey<GuestModel>();
-
-    //    // GUEST MODEL
-    //    modelBuilder.Entity<GuestModel>().HasKey(g => g.Name);
-    //    //-> Many To One - Table
-    //    modelBuilder.Entity<GuestModel>()
-    //        .HasOne(g => g.Tables)
-    //        .WithMany(t => t.Guests)
-    //        .HasForeignKey(g => g.TableNumber);
-    //    //-> Many To One - Review
-    //    modelBuilder.Entity<GuestModel>()
-    //        .HasOne(g => g.Reviews)
-    //        .WithMany(r => r.Guests)
-    //        .HasForeignKey(g => g.ReviewText);
-    //    //-> Many To Many - Dish
-    //    modelBuilder.Entity<GuestDishModel>().HasKey(a => new { a.GuestName, a.DishName });
-    //    modelBuilder.Entity<GuestDishModel>()
-    //        .HasOne(gd => gd.Guests)
-    //        .WithMany(g => g.GuestDish)
-    //        .HasForeignKey(gd => gd.GuestName);
-    //    modelBuilder.Entity<GuestDishModel>()
-    //        .HasOne(gd => gd.Dishes)
-    //        .WithMany(d => d.GuestDish)
-    //        .HasForeignKey(gd => gd.DishName);
-
-    //    // WAITER MODEL
-    //    modelBuilder.Entity<WaiterModel>().HasKey(w => w.Id);
-    //    //-> Many To Many - Table
-    //    modelBuilder.Entity<WaiterTableModel>().HasKey(a => new { a.WaiterId, a.TableNumber });
-    //    modelBuilder.Entity<WaiterTableModel>()
-    //        .HasOne(wt => wt.Waiters)
-    //        .WithMany(w => w.WaiterTable)
-    //        .HasForeignKey(wt => wt.WaiterId);
-    //    modelBuilder.Entity<WaiterTableModel>()
-    //        .HasOne(wt => wt.Tables)
-    //        .WithMany(t => t.WaiterTable)
-    //        .HasForeignKey(wt => wt.TableNumber);
-
-    //    // REVIEW MODEL
-    //    modelBuilder.Entity<ReviewModel>().HasKey(r => r.Text);
-    //    //-> One To Many - Dish
-    //    modelBuilder.Entity<ReviewModel>()
-    //        .HasMany<DishModel>(r => r.Dishes)
-    //        .WithOne(d => d.Reviews)
-    //        .HasForeignKey(d => d.ReviewText);
-
-    //    // DISH MODEL
-    //    modelBuilder.Entity<DishModel>().HasKey(d => d.Name);
-
-    //    // TABLE MODEL
-    //    modelBuilder.Entity<TableModel>().HasKey(t => t.TableId);
 
     }
 

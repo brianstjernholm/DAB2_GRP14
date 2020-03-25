@@ -10,7 +10,9 @@ namespace DAB2.Models
         public string Name { get; set; }
 
         // RELATIONS
+        public string CourseId { get; set; }
         public CourseModel Courses { get; set; }
+
         public List<ExerciseModel> Exercises { get; set; }
         public List<AssignmentModel> Assignments { get; set; }
     }
