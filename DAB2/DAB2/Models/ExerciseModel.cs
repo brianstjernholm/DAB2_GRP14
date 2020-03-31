@@ -9,13 +9,13 @@ namespace DAB2.Models
         public string HelpWhere { get; set; }
 
         // RELATIONS
-        public string TeacherAuId { get; set; }
+        public int TeacherAuId { get; set; }
         public TeacherModel Teachers { get; set; }
 
-        public string StudentAuId { get; set; }
+        public int StudentAuId { get; set; }
         public StudentModel Students { get; set; }
 
-        public string CourseId { get; set; }
+        public int CourseId { get; set; }
         public CourseModel Courses { get; set; }
     }
 }

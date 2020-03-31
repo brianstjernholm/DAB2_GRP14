@@ -7,10 +7,10 @@ namespace DAB2.Models
         public int StudentAssignmentModelId { get; set; } //Key
        
         // RELATIONS
-        public string AuId { get; set; }
+        public int AuId { get; set; }
         public StudentModel Students { get; set; }
 
-        public string AssignmentId { get; set; }
+        public int AssignmentId { get; set; }
         public AssignmentModel Assignments { get; set; }
     }
 }

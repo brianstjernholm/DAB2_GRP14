@@ -92,13 +92,13 @@ namespace DAB2.Data
             modelBuilder.Entity<TeacherModel>()
                 .HasMany<AssignmentModel>(am => am.Assignments)
                 .WithOne(tm => tm.Teachers)
-                .HasForeignKey(am => am.AssignmentId);
+                .HasForeignKey(am => am.TeacherAuId);
 
             //-> One To Many - Exercise
             modelBuilder.Entity<TeacherModel>()
                 .HasMany<ExerciseModel>(em => em.Exercises)
                 .WithOne(tm => tm.Teachers)
-                .HasForeignKey(em => new { em.Number, em.Lecture });
+                .HasForeignKey(em => em.TeacherAuId);
 
 
 
