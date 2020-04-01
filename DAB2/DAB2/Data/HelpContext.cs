@@ -19,10 +19,10 @@ namespace DAB2.Data
 
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=AFL2;Integrated Security=True");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=AFL2;Integrated Security=True");
+        //}
 
         public DbSet<CourseModel> Courses { get; set; }
         public DbSet<StudentModel> Students { get; set; }
@@ -166,9 +166,6 @@ namespace DAB2.Data
                 .WithOne(cm => cm.Courses)
                 .HasForeignKey(am => am.AuId);
         }
-
-        public DbSet<DAB2.Models.HelpRequestModel> HelpRequestModel { get; set; }
-
     }
 
 }
