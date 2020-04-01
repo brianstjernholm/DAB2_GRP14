@@ -149,5 +149,6 @@ namespace DAB2.Controllers
         {
             return _context.HelpRequestModel.Any(e => e.HelpRequestId == id);
         }
+
     }
 }
