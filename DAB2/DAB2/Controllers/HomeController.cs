@@ -28,10 +28,6 @@ namespace DAB2.Controllers
             return View();
         }
 
-        public IActionResult DBData()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

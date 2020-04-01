@@ -14,6 +14,11 @@ namespace DAB2.Data
         {
         }
 
+        public HelpContext()
+        {
+
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=AFL2;Integrated Security=True");
@@ -161,6 +166,8 @@ namespace DAB2.Data
                 .WithOne(cm => cm.Courses)
                 .HasForeignKey(am => am.AuId);
         }
+
+        public DbSet<DAB2.Models.HelpRequestModel> HelpRequestModel { get; set; }
 
     }
 
