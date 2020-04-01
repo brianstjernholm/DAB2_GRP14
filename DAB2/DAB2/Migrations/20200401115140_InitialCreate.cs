@@ -2,7 +2,7 @@
 
 namespace DAB2.Migrations
 {
-    public partial class Hel : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
