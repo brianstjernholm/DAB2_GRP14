@@ -36,7 +36,8 @@ namespace DAB2.Migrations
                 name: "Teachers",
                 columns: table => new
                 {
-                    AuId = table.Column<int>(nullable: false),
+                    AuId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     CourseId = table.Column<int>(nullable: false)
                 },
@@ -44,8 +45,8 @@ namespace DAB2.Migrations
                 {
                     table.PrimaryKey("PK_Teachers", x => x.AuId);
                     table.ForeignKey(
-                        name: "FK_Teachers_Courses_AuId",
-                        column: x => x.AuId,
+                        name: "FK_Teachers_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "CourseId",
                         onDelete: ReferentialAction.Cascade);
@@ -82,7 +83,8 @@ namespace DAB2.Migrations
                 name: "Assignments",
                 columns: table => new
                 {
-                    AssignmentId = table.Column<int>(nullable: false),
+                    AssignmentId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TeacherAuId = table.Column<int>(nullable: false),
                     CourseId = table.Column<int>(nullable: false)
                 },
@@ -90,8 +92,8 @@ namespace DAB2.Migrations
                 {
                     table.PrimaryKey("PK_Assignments", x => x.AssignmentId);
                     table.ForeignKey(
-                        name: "FK_Assignments_Courses_AssignmentId",
-                        column: x => x.AssignmentId,
+                        name: "FK_Assignments_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "CourseId",
                         onDelete: ReferentialAction.Cascade);
@@ -163,6 +165,11 @@ namespace DAB2.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Assignments_CourseId",
+                table: "Assignments",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Assignments_TeacherAuId",
                 table: "Assignments",
                 column: "TeacherAuId");
@@ -190,6 +197,11 @@ namespace DAB2.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_StudentCourseModel_CourseId",
                 table: "StudentCourseModel",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teachers_CourseId",
+                table: "Teachers",
                 column: "CourseId");
         }
 

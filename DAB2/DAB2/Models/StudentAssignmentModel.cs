@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace DAB2.Models
 {
     public class StudentAssignmentModel
     {
         // DEFINE SELF
+        [Key]
         public int StudentAssignmentModelId { get; set; } //Key
        
         // RELATIONS

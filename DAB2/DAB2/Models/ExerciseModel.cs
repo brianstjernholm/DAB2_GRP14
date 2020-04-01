@@ -1,10 +1,14 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace DAB2.Models
 {
     public class ExerciseModel
     {
         // DEFINE SELF
+        [Key]
         public string Lecture { get; set; } //Key
+        [Key]
         public int Number { get; set; }     //Key
         public string HelpWhere { get; set; }
 

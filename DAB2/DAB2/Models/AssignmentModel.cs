@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAB2.Models
 {
     public class AssignmentModel
     {
         // DEFINE SELF
+        [Key]
         public int AssignmentId { get; set; }   //Key
 
         // RELATIONS

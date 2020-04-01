@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAB2.Migrations
 {
     [DbContext(typeof(HelpContext))]
-    [Migration("20200401115140_InitialCreate")]
+    [Migration("20200401120804_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,9 @@ namespace DAB2.Migrations
             modelBuilder.Entity("DAB2.Models.AssignmentModel", b =>
                 {
                     b.Property<int>("AssignmentId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
@@ -32,6 +34,8 @@ namespace DAB2.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("AssignmentId");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("TeacherAuId");
 
@@ -144,7 +148,9 @@ namespace DAB2.Migrations
             modelBuilder.Entity("DAB2.Models.TeacherModel", b =>
                 {
                     b.Property<int>("AuId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
@@ -154,6 +160,8 @@ namespace DAB2.Migrations
 
                     b.HasKey("AuId");
 
+                    b.HasIndex("CourseId");
+
                     b.ToTable("Teachers");
                 });
 
@@ -161,7 +169,7 @@ namespace DAB2.Migrations
                 {
                     b.HasOne("DAB2.Models.CourseModel", "Courses")
                         .WithMany("Assignments")
-                        .HasForeignKey("AssignmentId")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -227,7 +235,7 @@ namespace DAB2.Migrations
                 {
                     b.HasOne("DAB2.Models.CourseModel", "Courses")
                         .WithMany("Teachers")
-                        .HasForeignKey("AuId")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
