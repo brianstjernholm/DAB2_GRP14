@@ -9,6 +9,10 @@ namespace DAB2.Data
 {
     public class HelpContext : DbContext
     {
+        public HelpContext(DbContextOptions<HelpContext> options)
+           : base(options)
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
