@@ -23,7 +23,7 @@ namespace DAB2.Controllers
         public async Task<IActionResult> Index()
         {
             var helpContext = _context.StudentAssignmentModel.Include(s => s.Assignments).Include(s => s.Students);
-            return View(await helpContext.ToListAsync());
+            return View(await helpContext.ToListAsync()); //
         }
 
         // GET: StudentAssignmentModels/Details/5
@@ -73,59 +73,59 @@ namespace DAB2.Controllers
         }
 
         // GET: StudentAssignmentModels/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var studentAssignmentModel = await _context.StudentAssignmentModel.FindAsync(id);
-            if (studentAssignmentModel == null)
-            {
-                return NotFound();
-            }
-            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "AssignmentId", "AssignmentId", studentAssignmentModel.AssignmentId);
-            ViewData["AuId"] = new SelectList(_context.Students, "AuId", "AuId", studentAssignmentModel.AuId);
-            return View(studentAssignmentModel);
-        }
+        //    var studentAssignmentModel = await _context.StudentAssignmentModel.FindAsync(id);
+        //    if (studentAssignmentModel == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    ViewData["AssignmentId"] = new SelectList(_context.Assignments, "AssignmentId", "AssignmentId", studentAssignmentModel.AssignmentId);
+        //    ViewData["AuId"] = new SelectList(_context.Students, "AuId", "AuId", studentAssignmentModel.AuId);
+        //    return View(studentAssignmentModel);
+        //}
 
         // POST: StudentAssignmentModels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StudentAssignmentModelId,AuId,AssignmentId")] StudentAssignmentModel studentAssignmentModel)
-        {
-            if (id != studentAssignmentModel.AuId)
-            {
-                return NotFound();
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("StudentAssignmentModelId,AuId,AssignmentId")] StudentAssignmentModel studentAssignmentModel)
+        //{
+        //    if (id != studentAssignmentModel.AuId)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(studentAssignmentModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!StudentAssignmentModelExists(studentAssignmentModel.AuId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "AssignmentId", "AssignmentId", studentAssignmentModel.AssignmentId);
-            ViewData["AuId"] = new SelectList(_context.Students, "AuId", "AuId", studentAssignmentModel.AuId);
-            return View(studentAssignmentModel);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(studentAssignmentModel);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!StudentAssignmentModelExists(studentAssignmentModel.AuId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["AssignmentId"] = new SelectList(_context.Assignments, "AssignmentId", "AssignmentId", studentAssignmentModel.AssignmentId);
+        //    ViewData["AuId"] = new SelectList(_context.Students, "AuId", "AuId", studentAssignmentModel.AuId);
+        //    return View(studentAssignmentModel);
+        //}
 
         // GET: StudentAssignmentModels/Delete/5
         public async Task<IActionResult> Delete(int? id)

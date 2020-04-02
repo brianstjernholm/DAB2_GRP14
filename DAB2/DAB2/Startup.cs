@@ -26,10 +26,10 @@ namespace DAB2
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<HelpContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("Default"));
-            });
+            //services.AddDbContext<HelpContext>(options =>
+            //{
+            //    options.UseSqlServer(Configuration.GetConnectionString("Default"));
+            //});
 
             services.AddControllersWithViews();
 

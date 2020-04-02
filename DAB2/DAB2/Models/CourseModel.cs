@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAB2.Models
 {
     public class CourseModel
     {
         // DEFINE SELF
-        public int CourseId { get; set; }   //Key
+        [Required]
+        public int CourseModelId { get; set; } //Key by convention
         public string Name { get; set; }
 
         // RELATIONS

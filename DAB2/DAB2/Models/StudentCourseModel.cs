@@ -4,7 +4,7 @@ namespace DAB2.Models
     public class StudentCourseModel
     {
         // DEFINE SELF
-        public int StudentCourseModelId { get; set; } //Key
+        //public int StudentCourseModelId { get; set; } //Key by convention
         public string Semester { get; set; }
         public string Active { get; set; }
 

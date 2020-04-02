@@ -8,12 +8,12 @@ namespace DAB2.Models
         // DEFINE SELF
         [Key]
         public int StudentAssignmentModelId { get; set; } //Key
-       
+
         // RELATIONS
         public int AuId { get; set; }
         public StudentModel Students { get; set; }
 
         public int AssignmentId { get; set; }
-        public AssignmentModel Assignments { get; set; }
+        public virtual AssignmentModel Assignments { get; set; }
     }
 }

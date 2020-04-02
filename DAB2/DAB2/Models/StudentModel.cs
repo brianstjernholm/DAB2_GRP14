@@ -7,8 +7,9 @@ namespace DAB2.Models
     public class StudentModel
     {
         // DEFINE SELF
+        [Required]
         [Key]
-        public int AuId { get; set; } //Key
+        public int AuId { get; set; } //Key by annotation
         public string Name { get; set; }
 
         // RELATIONS

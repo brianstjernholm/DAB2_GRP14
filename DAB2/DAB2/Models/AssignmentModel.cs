@@ -17,6 +17,6 @@ namespace DAB2.Models
         public int CourseId { get; set; }
         public CourseModel Courses { get; set; }
 
-        public List<StudentAssignmentModel> StudentAssignments { get; set; }
+        public virtual List<StudentAssignmentModel> StudentAssignments { get; set; }
     }
 }

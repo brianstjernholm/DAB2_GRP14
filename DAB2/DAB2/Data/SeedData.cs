@@ -36,10 +36,10 @@ namespace DAB2.Data
                 {
                     Name = "Brian"
                 }
-                
-                
-                
+
                 );
+
+
                 context.SaveChanges();
             }
         }
