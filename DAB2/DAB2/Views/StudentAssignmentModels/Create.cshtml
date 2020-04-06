@@ -6,25 +6,53 @@
 
 <h1>Create</h1>
 
+
+
+
 <h4>StudentAssignmentModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+            <label asp-for="StudentAssignmentModelId" class="control-label"></label>
+            <input asp-for="StudentAssignmentModelId" class="form-control" />
+            <span asp-validation-for="StudentAssignmentModelId" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+                <label asp-for="Student.Name" class="control-label"></label>
+
+                <input asp-for="Student.Name" class="form-control" />
+                <span asp-validation-for="Student.Name" class="text-danger"></span>
+
+                <select asp-for="AuId" class="form-control" asp-items="ViewBag.AuId"></select>
+            </div>*@
             <div class="form-group">
-                <label asp-for="StudentAssignmentModelId" class="control-label"></label>
-                <input asp-for="StudentAssignmentModelId" class="form-control" />
-                <span asp-validation-for="StudentAssignmentModelId" class="text-danger"></span>
+                <label asp-for="Student.AuId" class="control-label"></label>
+
+                <input asp-for="Student.AuId" class="form-control" />
+                <span asp-validation-for="Student.AuId" class="text-danger"></span>
+
+                @*<select asp-for="AuId" class="form-control" asp-items="ViewBag.AuId"></select>*@
             </div>
             <div class="form-group">
-                <label asp-for="AuId" class="control-label"></label>
-                <select asp-for="AuId" class ="form-control" asp-items="ViewBag.AuId"></select>
+                <label asp-for="Assignment.Course.Name" class="control-label"></label>
+
+                <input asp-for="Assignment.Course.Name" class="form-control" />
+                <span asp-validation-for="Assignment.Course.Name" class="text-danger"></span>
+
+                @*<select asp-for="AssignmentId" class="form-control" asp-items="ViewBag.AssignmentId"></select>*@
             </div>
             <div class="form-group">
-                <label asp-for="AssignmentId" class="control-label"></label>
-                <select asp-for="AssignmentId" class ="form-control" asp-items="ViewBag.AssignmentId"></select>
+                <label asp-for="Assignment.Teacher.Name" class="control-label"></label>
+
+                <input asp-for="Assignment.Teacher.Name" class="form-control" />
+                <span asp-validation-for="Assignment.Teacher.Name" class="text-danger"></span>
+
+                @*<select asp-for="AssignmentId" class="form-control" asp-items="ViewBag.AssignmentId"></select>*@
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

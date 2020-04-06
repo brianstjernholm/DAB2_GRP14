@@ -13,7 +13,6 @@ namespace DAB2.Data
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-
             using (var context = new HelpContext(serviceProvider.GetRequiredService<DbContextOptions<HelpContext>>()))
             {
                 // Look for any movies.
@@ -22,26 +21,44 @@ namespace DAB2.Data
                     return;   // DB has been seeded
                 }
 
-                context.Students.AddRange(new StudentModel
+                var studentVictor = new StudentModel
                 {
                     Name = "Victor"
-                },
+                };
+                context.Students.AddRange(studentVictor);
 
-                new StudentModel
+                var courseDab = new CourseModel 
+                { 
+                    Name = "DAB" 
+                };
+                context.Courses.AddRange(courseDab);
+
+
+                var teacherHenrik = new TeacherModel
                 {
-                    Name = "Lasse"
-                },
+                    Name = "Henrik",
+                    Course = courseDab
+                };
+                context.Teachers.AddRange(teacherHenrik);
 
-                new StudentModel
+                var assignmentDab = new AssignmentModel
                 {
-                    Name = "Brian"
-                }
+                    Course = courseDab,
+                    Teacher = teacherHenrik
+                };
+                context.Assignments.AddRange(assignmentDab);
 
-                );
-
+                context.StudentAssignmentModel.AddRange(new StudentAssignmentModel
+                {
+                    Assignment = assignmentDab,
+                    Student = studentVictor
+                });
 
                 context.SaveChanges();
             }
         }
     }
 }
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

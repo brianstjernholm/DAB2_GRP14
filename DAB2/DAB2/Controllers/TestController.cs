@@ -10,23 +10,23 @@ using DAB2.Models;
 
 namespace DAB2.Controllers
 {
-    public class StudentAssignmentModelsController : Controller
+    public class TestController : Controller
     {
         private readonly HelpContext _context;
 
-        public StudentAssignmentModelsController(HelpContext context)
+        public TestController(HelpContext context)
         {
             _context = context;
         }
 
-        // GET: StudentAssignmentModels
+        // GET: Test
         public async Task<IActionResult> Index()
         {
             var helpContext = _context.StudentAssignmentModel.Include(s => s.Assignment).Include(s => s.Student);
-            return View(await helpContext.ToListAsync()); //
+            return View(await helpContext.ToListAsync());
         }
 
-        // GET: StudentAssignmentModels/Details/5
+        // GET: Test/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,7 +37,7 @@ namespace DAB2.Controllers
             var studentAssignmentModel = await _context.StudentAssignmentModel
                 .Include(s => s.Assignment)
                 .Include(s => s.Student)
-                .FirstOrDefaultAsync(m => m.AuId == id);
+                .FirstOrDefaultAsync(m => m.AssignmentId == id);
             if (studentAssignmentModel == null)
             {
                 return NotFound();
@@ -46,7 +46,7 @@ namespace DAB2.Controllers
             return View(studentAssignmentModel);
         }
 
-        // GET: StudentAssignmentModels/Create
+        // GET: Test/Create
         public IActionResult Create()
         {
             ViewData["AssignmentId"] = new SelectList(_context.Assignments, "AssignmentId", "AssignmentId");
@@ -54,7 +54,7 @@ namespace DAB2.Controllers
             return View();
         }
 
-        // POST: StudentAssignmentModels/Create
+        // POST: Test/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -73,9 +73,10 @@ namespace DAB2.Controllers
             stm.Student = student;
             stm.Assignment = assignment;
 
+
             if (ModelState.IsValid)
             {
-                _context.Add(stm);
+                _context.Add(studentAssignmentModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -84,67 +85,66 @@ namespace DAB2.Controllers
             return View(studentAssignmentModel);
         }
 
+        // GET: Test/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var studentAssignmentModel = await _context.StudentAssignmentModel.FindAsync(id);
+            if (studentAssignmentModel == null)
+            {
+                return NotFound();
+            }
+            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "AssignmentId", "AssignmentId", studentAssignmentModel.AssignmentId);
+            ViewData["AuId"] = new SelectList(_context.Students, "AuId", "AuId", studentAssignmentModel.AuId);
+            return View(studentAssignmentModel);
+        }
 
-
-        // GET: StudentAssignmentModels/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var studentAssignmentModel = await _context.StudentAssignmentModel.FindAsync(id);
-        //    if (studentAssignmentModel == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["AssignmentId"] = new SelectList(_context.Assignments, "AssignmentId", "AssignmentId", studentAssignmentModel.AssignmentId);
-        //    ViewData["AuId"] = new SelectList(_context.Students, "AuId", "AuId", studentAssignmentModel.AuId);
-        //    return View(studentAssignmentModel);
-        //}
-
-        // POST: StudentAssignmentModels/Edit/5
+        // POST: Test/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("StudentAssignmentModelId,AuId,AssignmentId")] StudentAssignmentModel studentAssignmentModel)
-        //{
-        //    if (id != studentAssignmentModel.AuId)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("StudentAssignmentModelId,AuId,AssignmentId")] StudentAssignmentModel studentAssignmentModel)
+        {
+            if (id != studentAssignmentModel.AssignmentId)
+            {
+                return NotFound();
+            }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(studentAssignmentModel);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!StudentAssignmentModelExists(studentAssignmentModel.AuId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["AssignmentId"] = new SelectList(_context.Assignments, "AssignmentId", "AssignmentId", studentAssignmentModel.AssignmentId);
-        //    ViewData["AuId"] = new SelectList(_context.Students, "AuId", "AuId", studentAssignmentModel.AuId);
-        //    return View(studentAssignmentModel);
-        //}
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(studentAssignmentModel);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!StudentAssignmentModelExists(studentAssignmentModel.AssignmentId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["AssignmentId"] = new SelectList(_context.Assignments, "AssignmentId", "AssignmentId", studentAssignmentModel.AssignmentId);
+            ViewData["AuId"] = new SelectList(_context.Students, "AuId", "AuId", studentAssignmentModel.AuId);
+            return View(studentAssignmentModel);
+        }
 
-        // GET: StudentAssignmentModels/Delete/5
+        // GET: Test/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            //var sam = _context.StudentAssignmentModel.Where(s => s.StudentAssignmentModelId == id).FirstOrDefault();
+
             if (id == null)
             {
                 return NotFound();
@@ -153,16 +153,16 @@ namespace DAB2.Controllers
             var studentAssignmentModel = await _context.StudentAssignmentModel
                 .Include(s => s.Assignment)
                 .Include(s => s.Student)
-                .FirstOrDefaultAsync(m => m.AuId == id);
+                .FirstOrDefaultAsync(m => m.AssignmentId == id);
             if (studentAssignmentModel == null)
             {
                 return NotFound();
             }
 
-            return View(studentAssignmentModel);
+            return View(studentAssignmentModel); //studentAssignmentModel
         }
 
-        // POST: StudentAssignmentModels/Delete/5
+        // POST: Test/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -175,7 +175,7 @@ namespace DAB2.Controllers
 
         private bool StudentAssignmentModelExists(int id)
         {
-            return _context.StudentAssignmentModel.Any(e => e.AuId == id);
+            return _context.StudentAssignmentModel.Any(e => e.AssignmentId == id);
         }
     }
 }

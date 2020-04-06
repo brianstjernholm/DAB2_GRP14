@@ -6,20 +6,26 @@
 
 <h1>Index</h1>
 
-@*<p>
+<p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            @*<th>
+            @Html.DisplayNameFor(model => model.StudentAssignmentModelId)
+        </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.Student.Name)
+            </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.StudentAssignmentModelId)
+                @Html.DisplayNameFor(model => model.Student.AuId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Students)
+                @Html.DisplayNameFor(model => model.Assignment.Course.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Assignments)
+                @Html.DisplayNameFor(model => model.Assignment.Teacher.Name)
             </th>
             <th></th>
         </tr>
@@ -27,15 +33,22 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.StudentAssignmentModelId)
+        </td>*@
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Student.Name)
+            </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.StudentAssignmentModelId)
+                @Html.DisplayFor(modelItem => item.Student.AuId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Students.AuId)
+                @Html.DisplayFor(modelItem => item.Assignment.Course.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Assignments.AssignmentId)
+                @Html.DisplayFor(modelItem => item.Assignment.Teacher.Name)
             </td>
+
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
@@ -44,4 +57,4 @@
         </tr>
 }
     </tbody>
-</table>*@
+</table>

@@ -10,9 +10,9 @@ namespace DAB2.Models
 
         // RELATIONS
         public int AuId { get; set; }
-        public StudentModel Students { get; set; }
+        public StudentModel Student { get; set; }
 
         public int CourseId { get; set; }
-        public CourseModel Courses { get; set; }
+        public CourseModel Course { get; set; }
     }
 }

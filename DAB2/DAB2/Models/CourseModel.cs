@@ -7,8 +7,10 @@ namespace DAB2.Models
     public class CourseModel
     {
         // DEFINE SELF
-        [Required]
+        //[Required]
         public int CourseModelId { get; set; } //Key by convention
+
+        [Display(Name = "Course name")]
         public string Name { get; set; }
 
         // RELATIONS
