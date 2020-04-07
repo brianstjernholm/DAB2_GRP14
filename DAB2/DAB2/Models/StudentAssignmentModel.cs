@@ -11,9 +11,9 @@ namespace DAB2.Models
 
         // RELATIONS
         public int AuId { get; set; }
-        public StudentModel Students { get; set; }
+        public StudentModel Student { get; set; }
 
         public int AssignmentId { get; set; }
-        public virtual AssignmentModel Assignments { get; set; }
+        public virtual AssignmentModel Assignment { get; set; }
     }
 }

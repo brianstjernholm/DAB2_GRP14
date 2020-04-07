@@ -12,10 +12,10 @@ namespace DAB2.Models
 
         // RELATIONS
         public int TeacherAuId { get; set; }
-        public TeacherModel Teachers { get; set; }
+        public TeacherModel Teacher { get; set; }
 
         public int CourseId { get; set; }
-        public CourseModel Courses { get; set; }
+        public CourseModel Course { get; set; }
 
         public virtual List<StudentAssignmentModel> StudentAssignments { get; set; }
     }
